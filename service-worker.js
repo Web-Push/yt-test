@@ -3,18 +3,21 @@
 self.addEventListener('push', function(event) {
   console.log('Received a push message', event);
 
-  var title = 'Yay a message.';
-  var body = 'We have received a push message.';
-  var icon = '/images/icon-192x192.png';
-  var tag = 'simple-push-demo-notification-tag';
+  var registration = self.registration;
+  registration.unregister().then(function(result) {
+  });
+//  var title = 'Yay a message.';
+//  var body = 'We have received a push message.';
+//  var icon = '/images/icon-192x192.png';
+//  var tag = 'simple-push-demo-notification-tag';
 
-  event.waitUntil(
-    self.registration.showNotification(title, {
-      body: body,
-      icon: icon,
-      tag: tag
-    })
-  );
+//  event.waitUntil(
+//    self.registration.showNotification(title, {
+//      body: body,
+//      icon: icon,
+//      tag: tag
+//    })
+//  );
 });
 
 self.addEventListener('notificationclick', function(event) {
@@ -23,8 +26,6 @@ self.addEventListener('notificationclick', function(event) {
   // See: http://crbug.com/463146
   event.notification.close();
 
-  var registration = self.registration;
-  registration.unregister().then(function(result) {
-  });
+
 
 });
