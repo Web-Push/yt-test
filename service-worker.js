@@ -23,5 +23,8 @@ self.addEventListener('notificationclick', function(event) {
   // See: http://crbug.com/463146
   event.notification.close();
 
-  unsubscribe();
+  var registration = self.registration;
+  registration.unregister().then(function(result) {
+  });
+
 });
