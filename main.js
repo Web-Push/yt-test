@@ -109,7 +109,7 @@ window.addEventListener('load', function() {
     showLogin(!result);
 
     // ページの読み込み時点でログイン状態ならServiceWorkerの登録とsubscribeを行う
-    if (!result) {
+    if (result) {
         registServiceWorker();
     }
 });
