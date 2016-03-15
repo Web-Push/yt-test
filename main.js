@@ -187,9 +187,6 @@ function onRejected(err) {
   console.log('NG');
 }
 
-readFileAsync(module.filename)
-  .then(onFulfilled, onRejected);
-
 function unsubscribe() {
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
     // To unsubscribe from push messaging, you need get the
