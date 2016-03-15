@@ -182,7 +182,7 @@ function unsubscribe() {
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
     // To unsubscribe from push messaging, you need get the
     // subcription object, which you can call unsubscribe() on.
-    ServiceWorkerRegistration.unregister().then(function(result) { });
+    navigator.serviceWorker.unregister().then(function(result) { });
 
     serviceWorkerRegistration.pushManager.getSubscription().then(
       function(pushSubscription) {
