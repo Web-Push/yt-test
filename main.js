@@ -23,18 +23,7 @@ function onLogin() {
     if (error) {
         unsubscribe();
     } else {
-        // ログイン成功ならサブスクリプション取得
-        // ServiceWorkerの登録
-        // Check that service workers are supported, if so, progressively
-        // enhance and add push messaging support, otherwise continue without it.
-        if ('serviceWorker' in navigator) {
-            navigator.serviceWorker.register('./service-worker.js');
-            // TODO 本来は初期化成功時に行いたい
-            subscribe();
-        } else {
-            console.log('Service workers aren\'t supported in this browser.');
-            error = "ServiceWorkerの登録に失敗しました。";
-        }
+        registServiceWorker();
     }
 
     // 遅延処理
@@ -118,6 +107,11 @@ window.addEventListener('load', function() {
 
     // ログインボタン表示切替
     showLogin(!result);
+
+    // ページの読み込み時点でログイン状態ならServiceWorkerの登録とsubscribeを行う
+    if (!result) {
+        registServiceWorker();
+    }
 });
 
 /** ログインボタン表示切替 */
@@ -130,6 +124,22 @@ function showLogin(aShow) {
         document.getElementById("id_auIdTxt").style.display="none";
         document.getElementById("id_loginBtn").style.display="none";
         document.getElementById("id_logoutBtn").style.display="";
+    }
+}
+
+/** ServiceWorkerの登録処理 */
+function registServiceWorker() {
+    // ログイン成功ならサブスクリプション取得
+    // ServiceWorkerの登録
+    // Check that service workers are supported, if so, progressively
+    // enhance and add push messaging support, otherwise continue without it.
+    if ('serviceWorker' in navigator) {
+        navigator.serviceWorker.register('./service-worker.js');
+        // TODO 本来は初期化成功時に行いたい
+        subscribe();
+    } else {
+        console.log('Service workers aren\'t supported in this browser.');
+        error = "ServiceWorkerの登録に失敗しました。";
     }
 }
 
@@ -178,18 +188,21 @@ function sendSubscriptionToServer(subscription) {
 }
 
 
-// 成功時呼ばれる関数
+// ServiceWorker の解除要求の結果（ログを出すだけ）
 function onResult(result){
-  console.log('OK');
+  console.log(result);
 }
-
 
 function unsubscribe() {
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
-    // To unsubscribe from push messaging, you need get the
-    // subcription object, which you can call unsubscribe() on.
+
+    // ServiceWorker の解除
     serviceWorkerRegistration.unregister().then(onResult);
 
+    // TODO このあたりでKii Cloudのデータ削除処理を行う予定
+
+    // To unsubscribe from push messaging, you need get the
+    // subcription object, which you can call unsubscribe() on.
     serviceWorkerRegistration.pushManager.getSubscription().then(
       function(pushSubscription) {
         // Check we have a subscription to unsubscribe
