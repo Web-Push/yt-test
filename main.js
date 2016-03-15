@@ -110,7 +110,7 @@ window.addEventListener('load', function() {
 
     // ページの読み込み時点でログイン状態ならServiceWorkerの登録とsubscribeを行う
     if (result) {
-        registServiceWorker();
+        isReady();
     }
 });
 
@@ -127,19 +127,27 @@ function showLogin(aShow) {
     }
 }
 
+/** ServiceWorkerの状態チェック */
+function isReady() {
+     navigator.serviceWorker.ready.then(registServiceWorker); 
+}
+
 /** ServiceWorkerの登録処理 */
-function registServiceWorker() {
-    // ログイン成功ならサブスクリプション取得
-    // ServiceWorkerの登録
-    // Check that service workers are supported, if so, progressively
-    // enhance and add push messaging support, otherwise continue without it.
-    if ('serviceWorker' in navigator) {
-        navigator.serviceWorker.register('./service-worker.js');
-        // TODO 本来は初期化成功時に行いたい
-        subscribe();
-    } else {
-        console.log('Service workers aren\'t supported in this browser.');
-        error = "ServiceWorkerの登録に失敗しました。";
+function registServiceWorker(result) {
+    // ServiceWorkerがReady状態でなければ再登録をする
+    if (!result) {
+        // ログイン成功ならサブスクリプション取得
+        // ServiceWorkerの登録
+        // Check that service workers are supported, if so, progressively
+        // enhance and add push messaging support, otherwise continue without it.
+        if ('serviceWorker' in navigator) {
+            navigator.serviceWorker.register('./service-worker.js');
+            // TODO 本来は初期化成功時に行いたい
+            subscribe();
+        } else {
+            console.log('Service workers aren\'t supported in this browser.');
+            error = "ServiceWorkerの登録に失敗しました。";
+        }
     }
 }
 
