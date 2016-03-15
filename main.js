@@ -166,6 +166,7 @@ function sendSubscriptionToServer(subscription) {
 
   var mergedEndpoint = endpointWorkaround(subscription);
 
+  console.log(mergedEndpoint);
   // This is just for demo purposes / an easy to test by
   // generating the appropriate cURL command
   showCurlCommand(mergedEndpoint);
@@ -236,7 +237,12 @@ function subscribe() {
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
     serviceWorkerRegistration.pushManager.subscribe({userVisibleOnly: true})
       .then(function(subscription) {
-        console.log('subscribe');
+
+       if (!subscription) {
+         console.log('not subscription');
+       } else {
+         console.log('subscribe');
+       }
         // The subscription was successful
         isPushEnabled = true;
 
