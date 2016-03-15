@@ -1,5 +1,5 @@
-var username = "common_user";
-var password = "1234567890";
+var username = "cloudlearning777@gmail.com";
+var password = "cloudlearning777";
 var DATA_BUCKET = "test_bucket";
 var KII_KEY_USR_ID = "userId";
 var KII_KEY_SERVICE_URL = "serviceUrl";
