@@ -1,0 +1,27 @@
+#id_loader
+{
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    margin: auto;
+    width: 80px; /*ローディングアイコンの横サイズ*/
+    height: 80px; /*ローディングアイコンの縦サイズ*/
+    border-radius: 50%;  /*CSS3で円を書く*/
+    border: 10px solid #fff;  /*円に○の白枠をつける*/
+    border-right-color: transparent; /*円の右にC状の空きをつける*/
+}
+
+#id_loader
+{
+    animation: spin 1s linear infinite; /*1秒毎にくるくる回転するアニメーション*/
+}
+
+@keyframes spin
+{
+    0% { transform: rotate(0deg);   opacity: 0.2; } /*0%の時は20％の透明度*/
+    50%  { transform: rotate(180deg); opacity: 1.0; } /*50%の時は透明度なし*/
+    100%   { transform: rotate(360deg); opacity: 0.2; } /*100%の時に20％の透明度に戻る*/
+ 
+}
