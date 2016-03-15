@@ -1,4 +1,4 @@
-var username = "common_user";
+var username = "yt-test";
 var password = "1234567890";
 var DATA_BUCKET = "test_bucket";
 var KII_KEY_USR_ID = "userId";
