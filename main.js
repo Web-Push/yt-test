@@ -134,6 +134,8 @@ function isReady() {
 
 /** ServiceWorkerの登録処理 */
 function registServiceWorker(result) {
+    console.log(result);
+
     // ServiceWorkerがReady状態でなければ再登録をする
     if (!result) {
         // ログイン成功ならサブスクリプション取得
