@@ -164,33 +164,19 @@ function sendSubscriptionToServer(subscription) {
   // endpointWorkaround(subscription)
   console.log('TODO: Implement sendSubscriptionToServer()');
 
-  var mergedEndpoint = endpointWorkaround(subscription);
+  // KiiCloudに登録
+  userId = document.in.id_auIdTxt.value;
+  endpoint = endpointWorkaround(subscription);
+  serviceUrl = window.location.href;
+  
+  console.log('userId :' + userId);
+  console.log('endpoint :' + endpoint);
+  console.log('serviceUrl :' + serviceUrl);
+  
+  registerData(userId, endpoint, serviceUrl);
 
-  console.log(mergedEndpoint);
-  // This is just for demo purposes / an easy to test by
-  // generating the appropriate cURL command
-  showCurlCommand(mergedEndpoint);
 }
 
-/** GCM向けCurlコマンド作成 */
-// NOTE: This code is only suitable for GCM endpoints,
-// When another browser has a working version, alter
-// this to send a PUSH request directly to the endpoint
-function showCurlCommand(mergedEndpoint) {
-  // The curl command to trigger a push message straight from GCM
-  if (mergedEndpoint.indexOf(GCM_ENDPOINT) !== 0) {
-    console.log('This browser isn\'t currently ' +
-      'supported for this demo');
-    return;
-  }
-
-  var endpointSections = mergedEndpoint.split('/');
-  var subscriptionId = endpointSections[endpointSections.length - 1];
-
-  var curlCommand = 'curl --header "Authorization: key=' + API_KEY +
-    '" --header Content-Type:"application/json" ' + GCM_ENDPOINT +
-    ' -d "{\\"registration_ids\\":[\\"' + subscriptionId + '\\"]}"';
-}
 
 function unsubscribe() {
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
@@ -237,12 +223,6 @@ function subscribe() {
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
     serviceWorkerRegistration.pushManager.subscribe({userVisibleOnly: true})
       .then(function(subscription) {
-
-       if (!subscription) {
-         console.log('not subscription');
-       } else {
-         console.log('subscribe');
-       }
         // The subscription was successful
         isPushEnabled = true;
 
@@ -268,60 +248,4 @@ function subscribe() {
         }
       });
   });
-}
-
-/** ServiceWorkerの初期設定 */
-// Once the service worker is registered set the initial state
-function initialiseState() {
-  console.log('initialiseState() start');
-
-  // ServiceWorkerがプッシュ通知に対応しているか
-  // Are Notifications supported in the service worker?
-  if (!('showNotification' in ServiceWorkerRegistration.prototype)) {
-    console.log('Notifications aren\'t supported.');
-    return false;
-  }
-
-  // 現在の通知権限を確認し通知が拒否されているか
-  // Check the current Notification permission.
-  // If its denied, it's a permanent block until the
-  // user changes the permission
-  if (Notification.permission === 'denied') {
-    console.log('The user has blocked notifications.');
-    return false;
-  }
-
-  // プッシュ通知がサポートされているか
-  // Check if push messaging is supported
-  if (!('PushManager' in window)) {
-    console.log('Push messaging isn\'t supported.');
-    return false;
-  }
-
-  // Service Worker の登録情報を取得
-  // We need the service worker registration to check for a subscription
-  navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
-    // 登録されているプッシュ通知(subscription)をPromiseで取得
-    // Do we already have a push message subscription?
-    serviceWorkerRegistration.pushManager.getSubscription()
-      .then(function(subscription) {
-        // Enable any UI which subscribes / unsubscribes from
-        // push messages.
-        if (!subscription) {
-          // subscriptionオブジェクトの取得失敗
-          console.log('not subscription');
-          return false;
-        }
-
-        // Keep your server in sync with the latest subscription
-        console.log('is subscription true');
-        sendSubscriptionToServer(subscription);
-        return true;
-      })
-      .catch(function(err) {
-        console.log('Error during getSubscription()', err);
-        return false;
-      });
-  });
-  console.log('initialiseState() finish');
 }
