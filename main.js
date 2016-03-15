@@ -178,11 +178,23 @@ function sendSubscriptionToServer(subscription) {
 }
 
 
+// 成功時呼ばれる関数
+function onSuccess() {
+  console.log('OK');
+}
+
+function onRejected(err) {
+  console.log('NG');
+}
+
+readFileAsync(module.filename)
+  .then(onFulfilled, onRejected);
+
 function unsubscribe() {
   navigator.serviceWorker.ready.then(function(serviceWorkerRegistration) {
     // To unsubscribe from push messaging, you need get the
     // subcription object, which you can call unsubscribe() on.
-    navigator.serviceWorker.unregister().then(function(result) { });
+    navigator.serviceWorker.unregister().then(onSuccess, onRejected});
 
     serviceWorkerRegistration.pushManager.getSubscription().then(
       function(pushSubscription) {
