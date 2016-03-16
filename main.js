@@ -23,7 +23,8 @@ function onLogin() {
     if (error) {
         unsubscribe();
     } else {
-        registServiceWorker();
+//        registServiceWorker();
+        isReady();
     }
 
     // 遅延処理
@@ -209,7 +210,7 @@ function unsubscribe() {
     // ServiceWorker の解除
     serviceWorkerRegistration.unregister().then(onResult);
 
-    // TODO このあたりでKii Cloudのデータ削除処理を行う予定
+    // Cookieから値が取得できなかったので仕方無くdocumentからログインユーザーを取得する
     result = document.in.id_auIdTxt.value;
     console.log('LogoutUser=' + result);
     deleteData(result);
