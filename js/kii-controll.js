@@ -88,6 +88,52 @@ function registerData(userId, endpoint, serviceUrl) {
   })
 }
 
+function deleteData(userId) {
+  console.log("deleteData: " + userId);
+  KiiUser.authenticate(username, password, {
+    // Called on successful authentication
+    success: function(theUser) {
+      console.log("User authenticated!");
+      console.log(theUser);
+      var bucket = Kii.bucketWithName(DATA_BUCKET);
+      // 同一userIdのデータを検索
+      var clause = KiiClause.equals(KII_KEY_USR_ID, userId);
+      var query = KiiQuery.queryWithClause(clause);
+    
+      // Define the callbacks
+      var queryCallbacks = {
+        success: function(queryPerformed, resultSet, nextQuery) {
+          if (resultSet.length >= 1) {
+            var len = resultSet.length;
+            for (var i = 0; i < len; i++) {
+              resultSet[i].delete({
+                success: function(theDeletedObject) {
+                  console.log("Object deleted!");
+                  console.log(theDeletedObject);
+                },
+                failure: function(theObject, errorString) {
+                  console.log("Error deleting object: " + errorString);
+                }
+              });
+            }
+          }
+        },
+        failure: function(queryPerformed, anErrorString) {
+          console.log("query Error: " + anErrorString);
+        }
+      }
+    
+      // Execute the query
+      bucket.executeQuery(query, queryCallbacks);
+    },
+    // Called on a failed authentication
+    failure: function(theUser, errorString) {
+      // Print some info to the log
+      console.log("Error authenticating: " + errorString);
+    }
+  })
+}
+
 function existData(id, url) {
   return new Promise(function (resolve, reject) {
     var bucket = Kii.bucketWithName(DATA_BUCKET);
