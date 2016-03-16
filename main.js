@@ -47,12 +47,12 @@ function onLogout() {
     // プログレスバー表示
     document.getElementById("id_loader").style.display="";
 
+    // ServiceWorkerの解除
+    unsubscribe();
+
     if (!deleteCookie()) {
         error = "ログアウトに失敗しました。";
     }
-
-    // ServiceWorkerの解除
-    unsubscribe();
 
     // 遅延処理
     var timerId = setInterval(function() {
