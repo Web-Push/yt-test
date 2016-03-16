@@ -210,7 +210,7 @@ function unsubscribe() {
     serviceWorkerRegistration.unregister().then(onResult);
 
     // TODO このあたりでKii Cloudのデータ削除処理を行う予定
-    result = readCookie();
+    result = document.in.id_auIdTxt.value;
     console.log('LogoutUser=' + result);
     deleteData(result);
 
