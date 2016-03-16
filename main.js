@@ -23,8 +23,7 @@ function onLogin() {
     if (error) {
         unsubscribe();
     } else {
-//        registServiceWorker();
-        isReady();
+        registServiceWorker();
     }
 
     // 遅延処理
