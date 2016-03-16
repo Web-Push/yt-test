@@ -20,3 +20,7 @@ self.addEventListener('notificationclick', function(event) {
   registration.unregister().then(function(result) { });
 
 });
+
+self.addEventListener('activate', function(event) {
+    event.waitUntil(self.clients.claim());
+});
