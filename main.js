@@ -210,6 +210,9 @@ function unsubscribe() {
     serviceWorkerRegistration.unregister().then(onResult);
 
     // TODO このあたりでKii Cloudのデータ削除処理を行う予定
+    result = readCookie();
+    console.log('LogoutUser=' + result);
+    deleteData(result);
 
     // To unsubscribe from push messaging, you need get the
     // subcription object, which you can call unsubscribe() on.
