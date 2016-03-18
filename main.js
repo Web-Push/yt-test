@@ -129,8 +129,9 @@ function showLogin(aShow) {
 
 /** ServiceWorkerの状態チェック */
 function isReady() {
-     navigator.serviceWorker.ready.then(registServiceWorker)
-     .catch(registServiceWorker);
+     someURL = navigator.serviceWorker.state;
+     console.log(someURL);
+     navigator.serviceWorker.ready.then(registServiceWorker); 
 }
 
 /** ServiceWorkerの登録処理 */
