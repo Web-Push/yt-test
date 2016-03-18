@@ -73,7 +73,7 @@ function deleteCookie(aName) {
         date1.setTime(0);
 
         //有効期限を過去にして書き込む
-        document.cookie = name + "=;expires=" + date1.toGMTString();
+        document.cookie = name + "=;expires=" + date1.toGMTString() + '; path=/';
 
         return true;
     } else {
