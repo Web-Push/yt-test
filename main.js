@@ -110,7 +110,7 @@ window.addEventListener('load', function() {
 
     // ページの読み込み時点でログイン状態ならServiceWorkerの登録とsubscribeを行う
     if (result) {
-        isReady();
+        registServiceWorker();
     }
 });
 
@@ -131,7 +131,10 @@ function showLogin(aShow) {
 function isReady() {
      someURL = navigator.serviceWorker.state;
      console.log(someURL);
-     navigator.serviceWorker.ready.then(registServiceWorker); 
+     navigator.serviceWorker.ready.then(registServiceWorker) {
+     
+     
+     }; 
 }
 
 /** ServiceWorkerの登録処理 */
