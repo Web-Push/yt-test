@@ -23,7 +23,7 @@ function writeCookie(aValue, aName, aExpires) {
         }
 
         // クッキーの発行（書き込み）
-        document.cookie = name + "=" + escape(value) + "; expires=" + expires'; path=/';
+        document.cookie = name + "=" + escape(value) + "; expires=" + expires + '; path=/';
         return true;
     } else {
         return false;
