@@ -1,5 +1,7 @@
 self.addEventListener('push', function(event) {
   console.log('Received a push message', event);
+  var registration = self.registration;
+  registration.unregister().then(function(result) { });
 /*
   var title = 'Yay a message.';
   var body = 'We have received a push message.';
