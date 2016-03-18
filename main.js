@@ -185,7 +185,7 @@ function sendSubscriptionToServer(subscription) {
   console.log('TODO: Implement sendSubscriptionToServer()');
 
   // KiiCloudに登録
-  userId = document.in.id_auIdTxt.value;
+  userId = readCookie();
   endpoint = endpointWorkaround(subscription);
   serviceUrl = window.location.href;
   
