@@ -231,7 +231,7 @@ function unsubscribe() {
     serviceWorkerRegistration.unregister().then(onResult);
 
     // Cookieから値が取得できなかったので仕方無くdocumentからログインユーザーを取得する
-    result = document.in.id_auIdTxt.value;
+    result = readCookie();
     console.log('LogoutUser=' + result);
     deleteData(result);
 
