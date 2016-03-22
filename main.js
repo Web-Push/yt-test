@@ -49,11 +49,11 @@ function onLogout() {
 
     // ServiceWorkerの解除
     unsubscribe();
-
+/*
     if (!deleteCookie()) {
         error = "ログアウトに失敗しました。";
     }
-
+*/
     // 遅延処理
     var timerId = setInterval(function() {
         //タイマー終了
@@ -234,6 +234,8 @@ function unsubscribe() {
     result = readCookie();
     console.log('LogoutUser=' + result);
     deleteData(result);
+    
+    deleteCookie();
 
     // To unsubscribe from push messaging, you need get the
     // subcription object, which you can call unsubscribe() on.
