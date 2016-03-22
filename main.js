@@ -129,13 +129,16 @@ function showLogin(aShow) {
 
 /** ServiceWorkerの状態チェック */
 function isReady() {
+/*
      navigator.serviceWorker.ready
      .then(registServiceWorker)
      .catch(test); 
+*/
+    navigator.serviceWorker.register('./service-worker.js').then(test);
 }
 
 function test(result) {
-    console.log('error');
+    console.log(result);
 }
 
 /** ServiceWorkerの登録処理 */
