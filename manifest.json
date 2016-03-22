@@ -6,7 +6,7 @@
         "sizes": "192x192",
         "type": "image/png"
       }],
-  "start_url": "./index.html?homescreen=1",
+  "start_url": "https://web-push.github.io/yt-test/",
   "display": "standalone",
   "gcm_sender_id": "621173627185",
   
