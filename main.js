@@ -139,6 +139,9 @@ function isReady() {
 
 function test(result) {
     console.log(result);
+    if (!result) {
+        subscribe();
+    }
 }
 
 /** ServiceWorkerの登録処理 */
