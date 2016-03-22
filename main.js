@@ -140,7 +140,7 @@ function isReady() {
 function test(result) {
     console.log(result);
     if (result) {
-        serviceWorkerRegistration.pushManager.getSubscription().then(test2);
+        result.pushManager.getSubscription().then(test2);
     }
 }
 
