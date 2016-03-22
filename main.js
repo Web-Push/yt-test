@@ -140,7 +140,16 @@ function isReady() {
 function test(result) {
     console.log(result);
     if (!result) {
+        serviceWorkerRegistration.pushManager.getSubscription().then(test2);
+    }
+}
+
+function test2(result) {
+    console.log(result);
+    if (!result) {
         subscribe();
+    } else {
+        subscribe('Subscriptionが取れたので何もしない');
     }
 }
 
