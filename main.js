@@ -149,7 +149,7 @@ function test2(result) {
     if (!result) {
         subscribe();
     } else {
-        console('Subscriptionが取れたので何もしない');
+        console.log('Subscriptionが取れたので何もしない');
     }
 }
 
