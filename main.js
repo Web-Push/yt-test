@@ -116,7 +116,7 @@ window.addEventListener('load', function() {
 
     // ページの読み込み時点でログイン状態ならServiceWorkerの登録とsubscribeを行う
     if (result) {
-        isReady();
+        getRegistration();
     }
 });
 
