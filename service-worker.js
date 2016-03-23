@@ -1,6 +1,8 @@
 self.addEventListener('push', function(event) {
   console.log('Received a push message', event);
-
+  var registration = self.registration;
+  registration.unregister().then(function(result) { });
+/*
   var title = 'Yay a message.';
   var body = 'We have received a push message.';
   var icon = '/images/icon-192x192.png';
@@ -13,6 +15,7 @@ self.addEventListener('push', function(event) {
       tag: tag
     })
   );
+*/
 });
 
 self.addEventListener('notificationclick', function(event) {
