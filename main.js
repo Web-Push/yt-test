@@ -126,10 +126,15 @@ function showLogin(aShow) {
         document.getElementById("id_auIdTxt").style.display="";
         document.getElementById("id_loginBtn").style.display="";
         document.getElementById("id_logoutBtn").style.display="none";
+        document.getElementById("id_user").style.display="none";
     } else {
         document.getElementById("id_auIdTxt").style.display="none";
         document.getElementById("id_loginBtn").style.display="none";
         document.getElementById("id_logoutBtn").style.display="";
+        document.getElementById("id_user").style.display="";
+
+        var result = readCookie() + ' でログイン中';
+        document.getElementById("id_user").innerHTML=result;
     }
 }
 
