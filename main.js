@@ -254,11 +254,12 @@ function unsubscribe() {
           // the subscription id from your data store and
           // inform the user that you disabled push
 
-          // ServiceWorker の解除
-          serviceWorkerRegistration.unregister().then(onResult);
-
           console.log('Unsubscription error: ', e);
           return false;
+        }).finally {
+          console.log('finally');
+          // ServiceWorker の解除
+          serviceWorkerRegistration.unregister().then(onResult);
         });
       }).catch(function(e) {
         console.log('Error thrown while unsubscribing from ' +
