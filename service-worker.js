@@ -2,6 +2,7 @@ self.addEventListener('message', function (event) {
 
     console.log(event.data.action);
     console.log(event.data.articleId);
+    console.log(event.data.ttt);
     
   if (event.data.action === 'read-later') {
     // articleIdを持つ記事のリソースを取得してキャッシュに追加する
