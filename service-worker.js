@@ -63,18 +63,20 @@ self.addEventListener('activate', function(event) {
 function getJsonData(e) {
   e.waitUntil(
     caches.open(CACHE_KEY).then(function (cache) {
-      return cache.keys(USERS_FILE_NAME).then(function (response) {
+      return cache.match(USERS_FILE_NAME).then(function (response) {
        console.log(response);
+       
+       var obj = eval( '(' + response + ')' );
+       console.log(eval);
 
        return response;
       });
     })
   );
 /*
-       
+
        var obj = eval("(" + jsondata + ")");
-       
-       
+
   e.respondWith(
     caches.open(CACHE_KEY).then(function (cache) {
       return cache.match('https://web-push.github.io/yt-test/' + USERS_FILE_NAME).then(function (response) {
