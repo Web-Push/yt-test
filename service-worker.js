@@ -9,7 +9,7 @@ self.addEventListener('install', function(evt) {
       ]);
     });
   );
-
+});
 
 
 self.addEventListener('push', function(event) {
