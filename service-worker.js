@@ -64,7 +64,7 @@ function getJsonData(e) {
   e.waitUntil(
     caches.open(CACHE_KEY).then(function (cache) {
       return cache.match(USERS_FILE_NAME).then(function (response) {
-       console.log(response);
+       console.log(response.body);
        
        var obj = eval( '(' + response + ')' );
        console.log(eval);
