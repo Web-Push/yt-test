@@ -1,9 +1,10 @@
-var USERS_FILE_NAME = '/users.json';
+var USERS_FILE_NAME = 'users.json';
+var CACHE_KEY = 'v1';
 
 
 self.addEventListener('install', function(event) {
   event.waitUntil(
-    caches.open('v1').then(function(cache) {
+    caches.open(CACHE_KEY).then(function(cache) {
       return cache.addAll([
         USERS_FILE_NAME
       ]);
@@ -11,10 +12,9 @@ self.addEventListener('install', function(event) {
   );
 });
 
-
 self.addEventListener('push', function(event) {
   console.log('Received a push message', event);
-  console.log(caches.match(USERS_FILE_NAME));
+  console.log(getJsonData());
 
   var title = 'yt-test.';
   var body = 'yt-test のページで登録したServiceWorkerです。';
@@ -57,3 +57,26 @@ self.addEventListener('activate', function(event) {
   event.waitUntil(self.clients.claim());
   console.log('activate Complete');
 });
+
+
+
+function getJsonData() {
+  e.respondWith(
+    caches.open(CACHE_KEY).then(function (cache) {
+      return cache.match(USERS_FILE_NAME).then(function (response) {
+       console.log(response);
+       return response;
+      });
+    })
+  );
+/*
+  e.respondWith(
+    caches.open(CACHE_KEY).then(function (cache) {
+      return cache.match('https://web-push.github.io/yt-test/' + USERS_FILE_NAME).then(function (response) {
+       console.log(response);
+       return response;
+      });
+    })
+  );
+*/
+}
