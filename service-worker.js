@@ -62,15 +62,21 @@ function createDB(){
   var db = null;
 
   if (database) {
+    database.deleteDatabase("mydb");
+
     var openRequest = database.open("mydb", 1.0);
-    openRequest.onsuccess = function(evt) {
-      db = evt.result;
-
-      //Chromeの場合、以下のように記載
-      var store = db.createObjectStore("books", {"keyPath": "user"}, false);
-
-      //インデックス作成
+    
+    openRequest.onupgradeneeded = function(event) {
+      // データベースのバージョンに変更があった場合(初めての場合もここを通ります。)
+      db = event.target.result;
+      var store = db.createObjectStore("books", { keyPath: "mykey"}, false);
+     
+      // インデックスを作成します。
       store.createIndex("name", false);
+    }
+    
+    openRequest.onsuccess = function(event) {
+      db = event.target.result;
     }
   }
 }
@@ -88,8 +94,9 @@ function writeDB(user, url){
   
   //成功時コールバック
   req.onsuccess = function(evt) {
-    db = evt.result;
-    var store = db.transaction([], IDBTransaction.READ_WRITE).objectStore("books");
+    db = evt.target.result;
+    var transaction = db.transaction(["books"], "readwrite");
+    var store = transaction.objectStore("books");
 
     //データ追加
     store.add(userdata);
@@ -103,12 +110,18 @@ function checkLogin() {
   
   //成功時コールバック
   req.onsuccess = function(evt) {
-    db = evt.result;
-    var store = db.transaction().objectStore("books");
-    var data = store.get("user");
-    data.onsuccess = function(evt) {
-      var value = evt.result;
-      console.log(value);
+    db = evt.target.result;
+    var transaction = db.transaction(["books"], "readwrite");
+    var store = transaction.objectStore("books");
+    var request = store.get("user");
+    request.onsuccess = function(evt) {
+      if (event.target.result === undefined) {
+        console.log('キーが存在しない');
+      } else {
+        // 取得成功
+        console.log(event.target.result.user);
+        console.log(event.target.result.url);
+      }
     };
   };
 }
