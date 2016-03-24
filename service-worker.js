@@ -61,7 +61,7 @@ self.addEventListener('activate', function(event) {
 
 
 function getJsonData(e) {
-  e.respondWith(
+  e.waitUntil(
     caches.open(CACHE_KEY).then(function (cache) {
       return cache.match(USERS_FILE_NAME).then(function (response) {
        console.log(response);
