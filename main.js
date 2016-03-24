@@ -256,7 +256,7 @@ function unsubscribe() {
 
           console.log('Unsubscription error: ', e);
           return false;
-        }).finally(function(){ 
+        }).finally(function(f){ 
           console.log('finally');
           // ServiceWorker の解除
           serviceWorkerRegistration.unregister().then(onResult);
