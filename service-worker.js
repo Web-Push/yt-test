@@ -99,7 +99,6 @@ function writeDB(user, url){
     var store = transaction.objectStore("books");
 
     //データ追加
-    store.add(userdata);
     store.put({ mykey: user, myvalue: user});
     store.put({ mykey: url, myvalue: url});
   }
