@@ -69,7 +69,7 @@ function createDB(){
     openRequest.onupgradeneeded = function(event) {
       // データベースのバージョンに変更があった場合(初めての場合もここを通ります。)
       db = event.target.result;
-      var store = db.createObjectStore("books", { "keyPath": "mykey"}, false);
+      var store = db.createObjectStore("books", { keyPath: "mykey"});
      
       // インデックスを作成します。
       store.createIndex("myvalueIndex", "myvalue");
@@ -99,8 +99,8 @@ function writeDB(user, url){
     var store = transaction.objectStore("books");
 
     //データ追加
-    store.put({ mykey: user, myvalue: user});
-    store.put({ mykey: url, myvalue: url});
+    store.put({ mykey: "user", myvalue: user});
+    store.put({ mykey: "url", myvalue: url});
   }
 }
 
