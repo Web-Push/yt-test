@@ -221,7 +221,7 @@ function sendSubscriptionToServer(subscription) {
 
   navigator.serviceWorker.controller.postMessage({
     action: 'read-later',
-    articleId: 12345
+    articleId: 12345,
     ttt: 'aaaaaaaa'
   });
 }
