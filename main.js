@@ -247,6 +247,10 @@ function unsubscribe() {
         // We have a subcription, so call unsubscribe on it
         pushSubscription.unsubscribe().then(function() {
           isPushEnabled = false;
+
+          // ServiceWorker の解除
+          serviceWorkerRegistration.unregister().then(onResult);
+
           return true;
         }).catch(function(e) {
           // We failed to unsubscribe, this can lead to
@@ -255,11 +259,11 @@ function unsubscribe() {
           // inform the user that you disabled push
 
           console.log('Unsubscription error: ', e);
-          return false;
-        }).finally(function(f){ 
-          console.log('finally');
+
           // ServiceWorker の解除
           serviceWorkerRegistration.unregister().then(onResult);
+
+          return false;
         });
       }).catch(function(e) {
         console.log('Error thrown while unsubscribing from ' +
