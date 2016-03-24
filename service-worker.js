@@ -1,16 +1,14 @@
-var USERS_FILE_NAME = 'users.json';
-var CACHE_KEY = 'v1';
+self.addEventListener('message', function (event) {
 
+    console.log(event.data.action);
+    console.log(event.data.articleId);
+    
+  if (event.data.action === 'read-later') {
+    // articleIdを持つ記事のリソースを取得してキャッシュに追加する
 
-self.addEventListener('install', function(event) {
-  event.waitUntil(
-    caches.open(CACHE_KEY).then(function(cache) {
-      return cache.addAll([
-        USERS_FILE_NAME
-      ]);
-    })
-  );
+  }
 });
+
 
 self.addEventListener('push', function(event) {
   console.log('Received a push message', event);
