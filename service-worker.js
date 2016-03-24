@@ -58,12 +58,11 @@ self.addEventListener('activate', function(event) {
 
 
 function createDB(){
-  var indexedDB = indexedDB;
+  var database = indexedDB;
   var db = null;
 
-  if (indexedDB) {
-    indexedDB.deleteDatabase("mydb");
-    var openRequest = indexedDB.open("mydb", 1.0);
+  if (database) {
+    var openRequest = database.open("mydb", 1.0);
     openRequest.onsuccess = function(evt) {
       db = evt.result;
 
@@ -83,8 +82,8 @@ function writeDB(user, url){
     url: url
   };
   
-  var indexedDB = indexedDB;
-  var req = indexedDB.open("mydb");
+  var database = indexedDB;
+  var req = database.open("mydb");
   var db = null;
   
   //成功時コールバック
@@ -98,8 +97,8 @@ function writeDB(user, url){
 }
 
 function checkLogin() {
-  var indexedDB = indexedDB;
-  var req = indexedDB.open("mydb");
+  var database = indexedDB;
+  var req = database.open("mydb");
   var db = null;
   
   //成功時コールバック
