@@ -108,7 +108,7 @@ function checkLogin() {
   var database = indexedDB;
   var req = database.open("mydb");
   var db = null;
-  
+
   //成功時コールバック
   req.onsuccess = function(evt) {
     db = evt.target.result;
@@ -120,23 +120,19 @@ function checkLogin() {
         console.log('キーが存在しない');
       } else {
         // 取得成功
-        console.log(evt.target.result.user);
-        console.log(evt.target.result.url);
+        console.log(evt.target.result.myvalue);
       }
     };
-    
+
     var request2 = store.get("url");
     request2.onsuccess = function(evt) {
       if (evt.target.result === undefined) {
         console.log('キーが存在しない');
       } else {
         // 取得成功
-        console.log(evt.target.result.user);
-        console.log(evt.target.result.url);
+        console.log(evt.target.result.myvalue);
       }
     };
-    
-    
   };
 }
 
