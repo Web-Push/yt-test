@@ -1,7 +1,7 @@
 var USERS_FILE_NAME = '/users.json';
 
 
-self.addEventListener('install', function(evt) {
+self.addEventListener('install', function(event) {
   event.waitUntil(
     caches.open('v1').then(function(cache) {
       return cache.addAll([
