@@ -1,5 +1,5 @@
 self.addEventListener('message', function (event) {
-  console.log(event.data.LoginUser);
+  console.log(event.data.action);
   console.log(event.data.userId);
   console.log(event.data.serviceUrl);
 });
@@ -51,29 +51,3 @@ self.addEventListener('activate', function(event) {
   console.log('activate Complete');
 });
 
-
-
-function getJsonData(e) {
-  e.waitUntil(
-    caches.open(CACHE_KEY).then(function (cache) {
-      return cache.match(USERS_FILE_NAME).then(function (response) {
-       console.log(response.body.asJSON());
-
-       return response;
-      });
-    })
-  );
-/*
-
-       var obj = eval("(" + jsondata + ")");
-
-  e.respondWith(
-    caches.open(CACHE_KEY).then(function (cache) {
-      return cache.match('https://web-push.github.io/yt-test/' + USERS_FILE_NAME).then(function (response) {
-       console.log(response);
-       return response;
-      });
-    })
-  );
-*/
-}
