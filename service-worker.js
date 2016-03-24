@@ -1,10 +1,8 @@
 self.addEventListener('push', function(event) {
   console.log('Received a push message', event);
-  var registration = self.registration;
-  registration.unregister().then(function(result) { });
-/*
-  var title = 'Yay a message.';
-  var body = 'We have received a push message.';
+
+  var title = 'yt-test.';
+  var body = 'yt-test のページで登録したServiceWorkerです。';
   var icon = '/images/icon-192x192.png';
   var tag = 'simple-push-demo-notification-tag';
 
@@ -15,7 +13,6 @@ self.addEventListener('push', function(event) {
       tag: tag
     })
   );
-*/
 });
 
 self.addEventListener('notificationclick', function(event) {
