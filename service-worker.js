@@ -1,13 +1,16 @@
+
 self.addEventListener('message', function (event) {
   console.log(event.data.action);
   console.log(event.data.userId);
   console.log(event.data.serviceUrl);
+  
+  writeDB(event.data.userId, event.data.serviceUrl);
 });
 
 
 self.addEventListener('push', function(event) {
   console.log('Received a push message', event);
-  console.log(getJsonData(event));
+  checkLogin();
 
   var title = 'yt-test.';
   var body = 'yt-test のページで登録したServiceWorkerです。';
@@ -47,7 +50,60 @@ self.addEventListener('notificationclick', function(event) {
 });
 
 self.addEventListener('activate', function(event) {
+  createDB();
   event.waitUntil(self.clients.claim());
   console.log('activate Complete');
 });
+
+
+
+function createDB(){
+  var indexedDB = webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
+  var db = null;
+
+  if (indexedDB) {
+    indexedDB.deleteDatabase("mydb");
+    var openRequest = indexedDB.open("mydb", 1.0);
+    openRequest.onsuccess = function(evt) {
+      db = evt.result;
+
+      //Chromeの場合、以下のように記載
+      var store = db.createObjectStore("books", {"keyPath": "user"}, false);
+
+      //インデックス作成
+      store.createIndex("name", false);
+    }
+  }
+}
+
+function writeDB(user, url){
+  //データ作成
+  var userdata = {
+    user: user,
+    url: url
+  };
+  var indexedDB = webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
+  if (indexedDB) {
+    var store = db.transaction([], IDBTransaction.READ_WRITE).objectStore("books");
+
+    //データ追加
+    store.add(userdata);
+  }
+}
+
+function checkLogin() {
+  var indexedDB = webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
+  var req = indexedDB.open("mydb");
+
+  //成功時コールバック
+  req.onsuccess = function(evt) {
+    db = evt.result;
+    var store = db.transaction().objectStore("books");
+    var data = store.get("user");
+    data.onsuccess = function(evt) {
+      var value = evt.result;
+      console.log(value);
+    };
+  };
+}
 
