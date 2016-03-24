@@ -60,7 +60,7 @@ self.addEventListener('activate', function(event) {
 
 
 
-function getJsonData() {
+function getJsonData(e) {
   e.respondWith(
     caches.open(CACHE_KEY).then(function (cache) {
       return cache.match(USERS_FILE_NAME).then(function (response) {
