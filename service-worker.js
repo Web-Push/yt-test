@@ -1,5 +1,21 @@
+var USERS_FILE_NAME = '/users.json';
+
+
+self.addEventListener('install', function(evt) {
+  event.waitUntil(
+    caches.open('v1').then(function(cache) {
+      return cache.addAll([
+        USERS_FILE_NAME
+      ]);
+    });
+  );
+
+
+
 self.addEventListener('push', function(event) {
   console.log('Received a push message', event);
+  console.log(caches.match(USERS_FILE_NAME));
+  ;
 
   var title = 'yt-test.';
   var body = 'yt-test のページで登録したServiceWorkerです。';
