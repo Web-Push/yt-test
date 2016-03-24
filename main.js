@@ -150,7 +150,8 @@ function isReady(result) {
     if (!result) {
         subscribe();
     } else {
-        console.log('Subscriptionが取れたので何もしない');
+        console.log('Subscriptionが取れたらDBを更新しておく（別ページによるログアウト→ログイン対策）');
+        sendSubscriptionToServer(subscription);
     }
 }
 
