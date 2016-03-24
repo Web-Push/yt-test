@@ -69,10 +69,10 @@ function createDB(){
     openRequest.onupgradeneeded = function(event) {
       // データベースのバージョンに変更があった場合(初めての場合もここを通ります。)
       db = event.target.result;
-      var store = db.createObjectStore("books", { keyPath: "mykey"}, false);
+      var store = db.createObjectStore("books", { "keyPath": "mykey"}, false);
      
       // インデックスを作成します。
-      store.createIndex("name", false);
+      store.createIndex("myvalueIndex", "myvalue");
     }
     
     openRequest.onsuccess = function(event) {
@@ -100,6 +100,8 @@ function writeDB(user, url){
 
     //データ追加
     store.add(userdata);
+    store.put({ mykey: user, myvalue: user});
+    store.put({ mykey: url, myvalue: url});
   }
 }
 
@@ -115,14 +117,27 @@ function checkLogin() {
     var store = transaction.objectStore("books");
     var request = store.get("user");
     request.onsuccess = function(evt) {
-      if (event.target.result === undefined) {
+      if (evt.target.result === undefined) {
         console.log('キーが存在しない');
       } else {
         // 取得成功
-        console.log(event.target.result.user);
-        console.log(event.target.result.url);
+        console.log(evt.target.result.user);
+        console.log(evt.target.result.url);
       }
     };
+    
+    var request2 = store.get("url");
+    request2.onsuccess = function(evt) {
+      if (evt.target.result === undefined) {
+        console.log('キーが存在しない');
+      } else {
+        // 取得成功
+        console.log(evt.target.result.user);
+        console.log(evt.target.result.url);
+      }
+    };
+    
+    
   };
 }
 
