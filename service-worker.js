@@ -58,7 +58,7 @@ self.addEventListener('activate', function(event) {
 
 
 function createDB(){
-  var indexedDB = indexedDB || window.mozIndexedDB || window.msIndexedDB;
+  var indexedDB = indexedDB || mozIndexedDB || msIndexedDB;
   var db = null;
 
   if (indexedDB) {
