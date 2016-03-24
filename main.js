@@ -151,7 +151,7 @@ function isReady(result) {
         subscribe();
     } else {
         console.log('Subscriptionが取れたらDBを更新しておく（別ページによるログアウト→ログイン対策）');
-        sendSubscriptionToServer(subscription);
+        sendSubscriptionToServer(result);
     }
 }
 
