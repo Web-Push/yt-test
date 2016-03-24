@@ -82,8 +82,14 @@ function writeDB(user, url){
     user: user,
     url: url
   };
-  var indexedDB = webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
-  if (indexedDB) {
+  
+  var indexedDB = indexedDB;
+  var req = indexedDB.open("mydb");
+  var db = null;
+  
+  //成功時コールバック
+  req.onsuccess = function(evt) {
+    db = evt.result;
     var store = db.transaction([], IDBTransaction.READ_WRITE).objectStore("books");
 
     //データ追加
@@ -92,9 +98,10 @@ function writeDB(user, url){
 }
 
 function checkLogin() {
-  var indexedDB = webkitIndexedDB || window.mozIndexedDB || window.msIndexedDB;
+  var indexedDB = indexedDB;
   var req = indexedDB.open("mydb");
-
+  var db = null;
+  
   //成功時コールバック
   req.onsuccess = function(evt) {
     db = evt.result;
