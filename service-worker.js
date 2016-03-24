@@ -14,7 +14,7 @@ self.addEventListener('install', function(event) {
 
 self.addEventListener('push', function(event) {
   console.log('Received a push message', event);
-  console.log(getJsonData());
+  console.log(getJsonData(event));
 
   var title = 'yt-test.';
   var body = 'yt-test のページで登録したServiceWorkerです。';
