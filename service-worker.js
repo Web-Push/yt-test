@@ -138,7 +138,7 @@ function checkLogin(jsondata) {
         var result = false;
         var cnt = 0;
         while (jsondata.users.length > cnt) {
-          console.log('user_id:', jsondata.user[cnt]s.user_id);
+          console.log('user_id:', jsondata.users[cnt].user_id);
           console.log('service_url:', jsondata.users[cnt].service_url);
           if (user === jsondata.users[cnt].user_id && url === jsondata.users[cnt].service_url) {
             result = true;
