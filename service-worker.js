@@ -19,8 +19,7 @@ self.addEventListener('push', function(event) {
         response.text().then(function(textdata) {
           console.log('text:', textdata);
           var jsondata = JSON.parse(textdata);
-          var result = checkLogin(jsondata);
-          showNotification(result);
+          checkLogin(jsondata);
         });
       }
     })
@@ -128,14 +127,13 @@ function checkLogin(jsondata) {
 
     var request2 = store.get("url");
     request2.onsuccess = function(evt) {
+      var result = false;
       if (evt.target.result === undefined) {
         console.log('キーが存在しない');
       } else {
         // 取得成功
         console.log(evt.target.result.myvalue);
         url = evt.target.result.myvalue;
-        
-        var result = false;
         var cnt = 0;
         while (jsondata.users.length > cnt) {
           console.log('user_id:', jsondata.users[cnt].user_id);
@@ -145,9 +143,8 @@ function checkLogin(jsondata) {
           }
           cnt++;
         }
-
-        return result;
       }
+      showNotification(result);
     };
   };
 }
