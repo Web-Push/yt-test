@@ -11,31 +11,20 @@ self.addEventListener('message', function (event) {
 self.addEventListener('push', function(event) {
   console.log('Received a push message', event);
 
-  fetch('https://web-push.github.io/yt-test/users.json').then(function(response){
-    if (response.status !== 200) {
-      console.log('Looks like there was a problem. Status Code: ' + response.status);
-    } else {
-      response.text().then(function(textdata) {
-        console.log('text:' + textdata);
-        var contact = JSON.parse(textdata);
-        console.log('JSON:' + contact);
-      })
-    }
-  });
-/*
-  var title = 'yt-test.';
-  var body = 'yt-test のページで登録したServiceWorkerです。';
-  var icon = '/images/icon-192x192.png';
-  var tag = 'simple-push-demo-notification-tag';
-
   event.waitUntil(
-    self.registration.showNotification(title, {
-      body: body,
-      icon: icon,
-      tag: tag
-    })
+    fetch('https://web-push.github.io/yt-test/users.json').then(function(response){
+      if (response.status !== 200) {
+        console.log('Looks like there was a problem. Status Code: ' + response.status);
+      } else {
+        response.text().then(function(textdata) {
+          console.log('text:' + textdata);
+          var jsondata = JSON.parse(textdata);
+          var result = checkLogin(jsondata);
+          showNotification(result);
+        })
+      }
+    });
   );
-*/
 });
 
 /** Notificationをクリックしたときの処理 */
@@ -112,10 +101,14 @@ function writeDB(user, url){
 }
 
 /** indexDBに登録されているデータとfetchしてきたデータとのマッチング */
-function checkLogin() {
+function checkLogin(jsondata) {
   var database = indexedDB;
   var req = database.open("mydb");
   var db = null;
+  var user = null;
+  var url = null;
+
+
 
   //成功時コールバック
   req.onsuccess = function(evt) {
@@ -129,6 +122,7 @@ function checkLogin() {
       } else {
         // 取得成功
         console.log(evt.target.result.myvalue);
+        user = evt.target.result.myvalue;
       }
     };
 
@@ -139,8 +133,41 @@ function checkLogin() {
       } else {
         // 取得成功
         console.log(evt.target.result.myvalue);
+        url = evt.target.result.myvalue;
+        
+        var result = false;
+        var cnt = 0;
+        while (jsondata.length > cnt) {
+          console.log('user_id:' + jsondata.user_id);
+          console.log('service_url:' + jsondata.service_url);
+          if (user === jsondata.user_id && url === jsondata.service_url) {
+            result = true;
+          }
+          cnt++;
+        }
+
+        return result;
       }
     };
   };
 }
 
+/** Notificationの表示処理 */
+function showNotification(result) {
+  var title = 'yt-test.';
+  var body = '';
+  var icon = '/images/icon-192x192.png';
+  var tag = 'simple-push-demo-notification-tag';
+
+  if (result === true) {
+    body = 'ログイン状態です';
+  } else {
+    body = 'ログアウト状態です';
+  }
+
+  self.registration.showNotification(title, {
+    body: body,
+    icon: icon,
+    tag: tag
+  })
+}
