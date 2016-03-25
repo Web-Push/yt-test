@@ -23,7 +23,7 @@ self.addEventListener('push', function(event) {
           showNotification(result);
         });
       }
-    }));
+    })
   );
 });
 
