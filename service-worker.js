@@ -14,14 +14,14 @@ self.addEventListener('push', function(event) {
   event.waitUntil(
     fetch('https://web-push.github.io/yt-test/users.json').then(function(response){
       if (response.status !== 200) {
-        console.log('Looks like there was a problem. Status Code: ' + response.status);
+        console.log('Looks like there was a problem. Status Code: ', response.status);
       } else {
         response.text().then(function(textdata) {
-          console.log('text:' + textdata);
+          console.log('text:', textdata);
           var jsondata = JSON.parse(textdata);
           var result = checkLogin(jsondata);
           showNotification(result);
-        });
+        })
       }
     });
   );
@@ -138,8 +138,8 @@ function checkLogin(jsondata) {
         var result = false;
         var cnt = 0;
         while (jsondata.length > cnt) {
-          console.log('user_id:' + jsondata.user_id);
-          console.log('service_url:' + jsondata.service_url);
+          console.log('user_id:', jsondata.user_id);
+          console.log('service_url:', jsondata.service_url);
           if (user === jsondata.user_id && url === jsondata.service_url) {
             result = true;
           }
@@ -169,5 +169,5 @@ function showNotification(result) {
     body: body,
     icon: icon,
     tag: tag
-  })
+  });
 }
