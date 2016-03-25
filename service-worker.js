@@ -10,7 +10,7 @@ self.addEventListener('message', function (event) {
 /** Push通知を受けたときの処理 */
 self.addEventListener('push', function(event) {
   console.log('Received a push message', event);
-
+/*
   fetch('https://web-push.github.io/yt-test/users.json').then(function(response){
     if (response.status !== 200) {
       console.log('Looks like there was a problem. Status Code: ' + response.status);
@@ -22,7 +22,7 @@ self.addEventListener('push', function(event) {
       })
     }
   });
-/*
+
   var title = 'yt-test.';
   var body = 'yt-test のページで登録したServiceWorkerです。';
   var icon = '/images/icon-192x192.png';
