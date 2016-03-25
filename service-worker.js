@@ -22,7 +22,7 @@ self.addEventListener('push', function(event) {
       })
     }
   });
-*/
+/*
   var title = 'yt-test.';
   var body = 'yt-test のページで登録したServiceWorkerです。';
   var icon = '/images/icon-192x192.png';
