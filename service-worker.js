@@ -12,7 +12,7 @@ self.addEventListener('push', function(event) {
   console.log('Received a push message', event);
 
   event.waitUntil(
-    fetch('https://web-push.github.io/yt-test/users.json').then(function(response){
+    fetch('https://web-push.github.io/WebPushControl/users.json').then(function(response){
       if (response.status !== 200) {
         console.log('Looks like there was a problem. Status Code: ', response.status);
       } else {
