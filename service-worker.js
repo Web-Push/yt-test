@@ -17,7 +17,7 @@ self.addEventListener('push', function(event) {
     } else {
       response.text().then(function(textdata) {
         console.log('text:' + textdata);
-        var contact = JSON.parse(jsontext);
+        var contact = JSON.parse(textdata);
         console.log('JSON:' + contact);
       })
     }
