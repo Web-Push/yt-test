@@ -21,9 +21,9 @@ self.addEventListener('push', function(event) {
           var jsondata = JSON.parse(textdata);
           var result = checkLogin(jsondata);
           showNotification(result);
-        })
+        });
       }
-    });
+    }));
   );
 });
 
