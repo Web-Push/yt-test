@@ -120,18 +120,19 @@ function loadRegistData(jsondata) {
   var p1 = new Promise(
     function(resolve, reject) {
 
-    req.onsuccess = function(evt) {
-      db = evt.target.result;
-      var transaction = db.transaction(["books"], "readwrite");
-      var store = transaction.objectStore("books");
-      var request = store.get("user");
-      request.onsuccess = function(evt) {
-        if (evt.target.result === undefined) {
-          console.log('キーが存在しない');
-        } else {
-          // 取得成功
-          console.log(evt.target.result.myvalue);
-          user = evt.target.result.myvalue;
+      req.onsuccess = function(evt) {
+        db = evt.target.result;
+        var transaction = db.transaction(["books"], "readwrite");
+        var store = transaction.objectStore("books");
+        var request = store.get("user");
+        request.onsuccess = function(evt) {
+          if (evt.target.result === undefined) {
+            console.log('キーが存在しない');
+          } else {
+            // 取得成功
+            console.log(evt.target.result.myvalue);
+            user = evt.target.result.myvalue;
+          }
         }
       }
 
