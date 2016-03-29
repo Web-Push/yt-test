@@ -30,7 +30,6 @@ self.addEventListener('push', function(event) {
   );
 
   p1.then(loadRegistData(jsondata)
-    console.log('test1');
   ).catch(function(e) {
     console.log('Jsonファイルの読み込みエラー');
   });
@@ -152,7 +151,6 @@ function loadRegistData(jsondata) {
   );
 
   p2.then(checkLogin(jsondata, user, url)
-  console.log('test2');
   ).catch(function(e) {
     console.log('ログインユーザの取得失敗');
   });
