@@ -14,20 +14,26 @@ self.addEventListener('push', function(event) {
   var jsondata;
 
   event.waitUntil(
-    fetch('https://web-push.github.io/WebPushControl/users.json').then(function(response){
-      if (response.status !== 200) {
-        console.log('Looks like there was a problem. Status Code: ', response.status);
-      } else {
-        response.text().then(function(textdata) {
-          console.log('text:', textdata);
-          jsondata = JSON.parse(textdata);
-        });
-      }
-    })
-  );
+    var p1 = new Promise(
+      function(resolve, reject) {
 
-  event.waitUntil(
-    checkLogin(event, jsondata)
+        fetch('https://web-push.github.io/WebPushControl/users.json').then(function(response){
+          if (response.status !== 200) {
+            console.log('Looks like there was a problem. Status Code: ', response.status);
+          } else {
+            response.text().then(function(textdata) {
+              console.log('text:', textdata);
+              jsondata = JSON.parse(textdata);
+            });
+          }
+        })
+      }
+    );
+
+    p1.then(loadRegistData(jsondata)
+    ).catch(function(e) {
+      console.log('Jsonファイルの読み込みエラー');
+    });
   );
 });
 
@@ -105,17 +111,16 @@ function writeDB(user, url){
 }
 
 /** indexDBに登録されているデータとfetchしてきたデータとのマッチング */
-function checkLogin(event, jsondata) {
+function loadRegistData(jsondata) {
   var database = indexedDB;
   var req = database.open("mydb");
   var db = null;
   var user = null;
   var url = null;
-  var result = false;
-  var cnt = 0;
 
-  event.waitUntil(
-    //成功時コールバック
+  var p1 = new Promise(
+    function(resolve, reject) {
+
     req.onsuccess = function(evt) {
       db = evt.target.result;
       var transaction = db.transaction(["books"], "readwrite");
@@ -144,6 +149,14 @@ function checkLogin(event, jsondata) {
     }
   );
 
+  p1.then(checkLogin(jsondata, user, url)
+  ).catch(function(e) {
+    console.log('ログインユーザの取得失敗');
+  });
+}
+
+function checkLogin(user, url, jsondata) {
+  var result = false;
   while (jsondata.users.length > cnt) {
     console.log('user_id:', jsondata.users[cnt].user_id);
     console.log('service_url:', jsondata.users[cnt].service_url);
@@ -152,9 +165,8 @@ function checkLogin(event, jsondata) {
     }
     cnt++;
   }
-  
-  showNotification(result);
 
+  showNotification(result);
 }
 
 /** Notificationの表示処理 */
