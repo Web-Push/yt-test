@@ -25,7 +25,7 @@ self.addEventListener('push', function(event) {
             jsondata = JSON.parse(textdata);
           });
         }
-      })
+      });
     }
 
     p1.then(loadRegistData(jsondata)
