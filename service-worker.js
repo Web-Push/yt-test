@@ -129,7 +129,7 @@ function checkLogin(event, jsondata) {
           console.log(evt.target.result.myvalue);
           user = evt.target.result.myvalue;
         }
-      };
+      }
 
       var request2 = store.get("url");
       request2.onsuccess = function(evt) {
@@ -140,8 +140,8 @@ function checkLogin(event, jsondata) {
           console.log(evt.target.result.myvalue);
           url = evt.target.result.myvalue;
         }
-      };
-    };
+      }
+    }
   );
 
   while (jsondata.users.length > cnt) {
