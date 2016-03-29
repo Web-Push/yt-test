@@ -13,22 +13,20 @@ self.addEventListener('push', function(event) {
 
   var jsondata;
 
-  event.waitUntil(
-    var p1 = new Promise(
-      function(resolve, reject) {
+  var p1 = new Promise(
+    function(resolve, reject) {
 
-        fetch('https://web-push.github.io/WebPushControl/users.json').then(function(response){
-          if (response.status !== 200) {
-            console.log('Looks like there was a problem. Status Code: ', response.status);
-          } else {
-            response.text().then(function(textdata) {
-              console.log('text:', textdata);
-              jsondata = JSON.parse(textdata);
-            });
-          }
-        })
-      }
-    );
+      fetch('https://web-push.github.io/WebPushControl/users.json').then(function(response){
+        if (response.status !== 200) {
+          console.log('Looks like there was a problem. Status Code: ', response.status);
+        } else {
+          response.text().then(function(textdata) {
+            console.log('text:', textdata);
+            jsondata = JSON.parse(textdata);
+          });
+        }
+      })
+    }
 
     p1.then(loadRegistData(jsondata)
     ).catch(function(e) {
