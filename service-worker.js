@@ -157,6 +157,9 @@ function loadRegistData(jsondata) {
 
 function checkLogin(user, url, jsondata) {
   var result = false;
+  
+  console.log('checkLogin()');
+/*
   while (jsondata.users.length > cnt) {
     console.log('user_id:', jsondata.users[cnt].user_id);
     console.log('service_url:', jsondata.users[cnt].service_url);
@@ -165,7 +168,7 @@ function checkLogin(user, url, jsondata) {
     }
     cnt++;
   }
-
+*/
   showNotification(result);
 }
 
