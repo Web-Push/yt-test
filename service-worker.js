@@ -11,6 +11,8 @@ self.addEventListener('message', function (event) {
 self.addEventListener('push', function(event) {
   console.log('Received a push message', event);
 
+  var jsondata;
+
   event.waitUntil(
     fetch('https://web-push.github.io/WebPushControl/users.json').then(function(response){
       if (response.status !== 200) {
@@ -18,11 +20,14 @@ self.addEventListener('push', function(event) {
       } else {
         response.text().then(function(textdata) {
           console.log('text:', textdata);
-          var jsondata = JSON.parse(textdata);
-          checkLogin(jsondata);
+          jsondata = JSON.parse(textdata);
         });
       }
     })
+  );
+
+  event.waitUntil(
+    checkLogin(event, jsondata);
   );
 });
 
@@ -100,53 +105,56 @@ function writeDB(user, url){
 }
 
 /** indexDBに登録されているデータとfetchしてきたデータとのマッチング */
-function checkLogin(jsondata) {
+function checkLogin(event, jsondata) {
   var database = indexedDB;
   var req = database.open("mydb");
   var db = null;
   var user = null;
   var url = null;
+  var result = false;
+  var cnt = 0;
 
-
-
-  //成功時コールバック
-  req.onsuccess = function(evt) {
-    db = evt.target.result;
-    var transaction = db.transaction(["books"], "readwrite");
-    var store = transaction.objectStore("books");
-    var request = store.get("user");
-    request.onsuccess = function(evt) {
-      if (evt.target.result === undefined) {
-        console.log('キーが存在しない');
-      } else {
-        // 取得成功
-        console.log(evt.target.result.myvalue);
-        user = evt.target.result.myvalue;
-      }
-    };
-
-    var request2 = store.get("url");
-    request2.onsuccess = function(evt) {
-      var result = false;
-      if (evt.target.result === undefined) {
-        console.log('キーが存在しない');
-      } else {
-        // 取得成功
-        console.log(evt.target.result.myvalue);
-        url = evt.target.result.myvalue;
-        var cnt = 0;
-        while (jsondata.users.length > cnt) {
-          console.log('user_id:', jsondata.users[cnt].user_id);
-          console.log('service_url:', jsondata.users[cnt].service_url);
-          if (user === jsondata.users[cnt].user_id && url === jsondata.users[cnt].service_url) {
-            result = true;
-          }
-          cnt++;
+  event.waitUntil(
+    //成功時コールバック
+    req.onsuccess = function(evt) {
+      db = evt.target.result;
+      var transaction = db.transaction(["books"], "readwrite");
+      var store = transaction.objectStore("books");
+      var request = store.get("user");
+      request.onsuccess = function(evt) {
+        if (evt.target.result === undefined) {
+          console.log('キーが存在しない');
+        } else {
+          // 取得成功
+          console.log(evt.target.result.myvalue);
+          user = evt.target.result.myvalue;
         }
-      }
-      showNotification(result);
+      };
+
+      var request2 = store.get("url");
+      request2.onsuccess = function(evt) {
+        if (evt.target.result === undefined) {
+          console.log('キーが存在しない');
+        } else {
+          // 取得成功
+          console.log(evt.target.result.myvalue);
+          url = evt.target.result.myvalue;
+        }
+      };
     };
-  };
+  );
+
+  while (jsondata.users.length > cnt) {
+    console.log('user_id:', jsondata.users[cnt].user_id);
+    console.log('service_url:', jsondata.users[cnt].service_url);
+    if (user === jsondata.users[cnt].user_id && url === jsondata.users[cnt].service_url) {
+      result = true;
+    }
+    cnt++;
+  }
+  
+  showNotification(result);
+
 }
 
 /** Notificationの表示処理 */
