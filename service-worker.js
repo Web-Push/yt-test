@@ -30,6 +30,7 @@ self.addEventListener('push', function(event) {
   );
 
   p1.then(loadRegistData(jsondata)
+    console.log('test1');
   ).catch(function(e) {
     console.log('Jsonファイルの読み込みエラー');
   });
@@ -111,13 +112,14 @@ function writeDB(user, url){
 
 /** indexDBに登録されているデータとfetchしてきたデータとのマッチング */
 function loadRegistData(jsondata) {
+  console.log('loadRegistData()');
   var database = indexedDB;
   var req = database.open("mydb");
   var db = null;
   var user = null;
   var url = null;
 
-  var p1 = new Promise(
+  var p2 = new Promise(
     function(resolve, reject) {
 
       req.onsuccess = function(evt) {
@@ -149,7 +151,8 @@ function loadRegistData(jsondata) {
     }
   );
 
-  p1.then(checkLogin(jsondata, user, url)
+  p2.then(checkLogin(jsondata, user, url)
+  console.log('test2');
   ).catch(function(e) {
     console.log('ログインユーザの取得失敗');
   });
