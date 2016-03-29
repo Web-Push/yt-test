@@ -27,7 +27,7 @@ self.addEventListener('push', function(event) {
   );
 
   event.waitUntil(
-    checkLogin(event, jsondata);
+    checkLogin(event, jsondata)
   );
 });
 
