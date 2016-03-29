@@ -134,16 +134,16 @@ function loadRegistData(jsondata) {
             user = evt.target.result.myvalue;
           }
         }
-      }
 
-      var request2 = store.get("url");
-      request2.onsuccess = function(evt) {
-        if (evt.target.result === undefined) {
-          console.log('キーが存在しない');
-        } else {
-          // 取得成功
-          console.log(evt.target.result.myvalue);
-          url = evt.target.result.myvalue;
+        var request2 = store.get("url");
+        request2.onsuccess = function(evt) {
+          if (evt.target.result === undefined) {
+            console.log('キーが存在しない');
+          } else {
+            // 取得成功
+            console.log(evt.target.result.myvalue);
+            url = evt.target.result.myvalue;
+          }
         }
       }
     }
