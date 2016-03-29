@@ -25,14 +25,15 @@ self.addEventListener('push', function(event) {
             jsondata = JSON.parse(textdata);
           });
         }
-      });
+      })
     }
-
-    p1.then(loadRegistData(jsondata)
-    ).catch(function(e) {
-      console.log('Jsonファイルの読み込みエラー');
-    });
   );
+
+  p1.then(loadRegistData(jsondata)
+  ).catch(function(e) {
+    console.log('Jsonファイルの読み込みエラー');
+  });
+
 });
 
 /** Notificationをクリックしたときの処理 */
