@@ -52,7 +52,7 @@ self.addEventListener('notificationclick', function(event) {
       }
     }
     if (clients.openWindow) {
-      return clients.openWindow("http://www.yahoo.co.jp/");
+      return clients.openWindow("intent://#Intent;scheme=myapp;package=com.example.locationtest;end");
     }
   }));
 
