@@ -33,6 +33,9 @@ self.addEventListener('notificationclick', function(event) {
   // See: http://crbug.com/463146
   event.notification.close();
 
+  location.href = "intent://#Intent;scheme=myapp;package=com.example.locationtest;end";
+
+/*
   // This looks to see if the current is already open and
   // focuses if it is
   event.waitUntil(clients.matchAll({
@@ -48,6 +51,7 @@ self.addEventListener('notificationclick', function(event) {
       return clients.openWindow('/');
     }
   }));
+*/
 });
 
 /** ServiceWorkerのactivateが完了したときの処理 */
