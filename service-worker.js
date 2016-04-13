@@ -151,7 +151,7 @@ function checkLogin(jsondata) {
 function showNotification(result) {
   var title = 'yt-test.';
   var body = '';
-  var icon = "https://web-push.github.io/yt-test/images/icon-192x192.png";
+  var icon = '/images/icon-192x192.png';
   var tag = 'simple-push-demo-notification-tag';
 
   if (result === true) {
