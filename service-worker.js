@@ -52,7 +52,7 @@ self.addEventListener('notificationclick', function(event) {
       }
     }
     if (clients.openWindow) {
-      return clients.openWindow("myapp://jp.app;package=com.example.locationtest");
+      return clients.openWindow("intent://scan/#Intent;scheme=myapp;package=com.example.locationtest;end");
     }
   }));
 
