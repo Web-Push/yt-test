@@ -52,7 +52,7 @@ self.addEventListener('notificationclick', function(event) {
       }
     }
     if (clients.openWindow) {
-      return clients.openWindow("intent://#Intent;scheme=myapp;package=com.example.locationtest;end");
+      return clients.openWindow('intent://post?message={{TEXT}}#Intent;scheme=myapp;package=com.example.locationtest;end;');
     }
   }));
 
