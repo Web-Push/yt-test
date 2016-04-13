@@ -29,11 +29,16 @@ self.addEventListener('push', function(event) {
 /** Notificationをクリックしたときの処理 */
 self.addEventListener('notificationclick', function(event) {
   console.log('On notification click: ', event.notification.tag);
+
+//  location.href = "intent://#Intent;scheme=myapp;package=com.example.locationtest;end";
+  location.href = "http://www.yahoo.co.jp/";
+
+
+
+
   // Android doesn’t close the notification when you click on it
   // See: http://crbug.com/463146
   event.notification.close();
-
-  location.href = "intent://#Intent;scheme=myapp;package=com.example.locationtest;end";
 
 /*
   // This looks to see if the current is already open and
