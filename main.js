@@ -147,12 +147,15 @@ function getRegistration() {
 
 function isReady(result) {
     console.log(result);
+    subscribe();
+/*
     if (!result) {
         subscribe();
     } else {
         console.log('Subscriptionが取れたらDBを更新しておく（別ページによるログアウト→ログイン対策）');
         sendSubscriptionToServer(result);
     }
+*/
 }
 
 /** ServiceWorkerの登録処理 */
